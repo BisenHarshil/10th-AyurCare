@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Herb Search — AyurCare</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        .header { background: #2d6a4f; color: white; padding: 20px 24px; }
+        .header a { color: white; text-decoration: none; font-size: 14px; }
+        .header h2 { margin-top: 6px; }
+        .container { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+        .search-box { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .search-row { display: flex; gap: 10px; margin-top: 16px; }
+        input[type=text] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; }
+        .search-btn { background: #2d6a4f; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; }
+        .search-btn:hover { background: #1b4332; }
+        .suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .sug-btn { padding: 6px 14px; border: 1px solid #2d6a4f; border-radius: 20px; background: white; color: #2d6a4f; cursor: pointer; font-size: 13px; }
+        .sug-btn:hover { background: #2d6a4f; color: white; }
+        .results { margin-top: 10px; }
+        .herb-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 16px; border-left: 4px solid #2d6a4f; }
+        .herb-card h3 { color: #2d6a4f; font-size: 18px; margin-bottom: 8px; }
+        .herb-card p { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 10px; }
+        .benefits { padding-left: 18px; margin-bottom: 10px; }
+        .benefits li { font-size: 13px; margin-bottom: 4px; }
+        .uses { font-size: 13px; color: #444; background: #f0f7f0; padding: 10px; border-radius: 6px; margin-top: 8px; }
+        .treat-tag { display: inline-block; background: #d8f3dc; color: #2d6a4f; padding: 2px 10px; border-radius: 10px; font-size: 11px; margin: 2px; }
+        .not-found { text-align: center; padding: 30px; color: #888; font-size: 15px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← Back to Home</a>
+        <h2>🔍 Search Herbs</h2>
+    </div>
+    <div class="container">
+        <div class="search-box">
+            <h3 style="color:#2d6a4f">Find an Ayurvedic Herb</h3>
+            <p style="color:#666;font-size:14px;margin-top:6px">Search by herb name or what it treats</p>
+            <div class="search-row">
+                <input type="text" id="searchInput" placeholder="e.g. Tulsi, Ginger, stress..." onkeypress="if(event.key==='Enter') searchHerb()">
+                <button class="search-btn" onclick="searchHerb()">Search</button>
+            </div>
+            <div class="suggestions">
+                <span style="font-size:13px;color:#888;margin-right:4px">Try:</span>
+                <button class="sug-btn" onclick="quickSearch('Tulsi')">Tulsi</button>
+                <button class="sug-btn" onclick="quickSearch('Ginger')">Ginger</button>
+                <button class="sug-btn" onclick="quickSearch('Neem')">Neem</button>
+                <button class="sug-btn" onclick="quickSearch('Ashwagandha')">Ashwagandha</button>
+                <button class="sug-btn" onclick="quickSearch('Turmeric')">Turmeric</button>
+            </div>
+        </div>
+        <div class="results" id="results"></div>
+    </div>
+    <script>
+        function quickSearch(term) {
+            document.getElementById('searchInput').value = term;
+            searchHerb();
+        }
+        function searchHerb() {
+            var term = document.getElementById('searchInput').value.trim();
+            if (!term) { alert('Please enter a herb name.'); return; }
+            fetch('/herb_search', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({search_term: term})
+            })
+            .then(r => r.json())
+            .then(data => {
+                var div = document.getElementById('results');
+                if (!data.found) {
+                    div.innerHTML = '<div class="not-found">🌿 ' + data.message + '</div>';
+                    return;
+                }
+                div.innerHTML = data.results.map(h => `
+                    <div class="herb-card">
+                        <h3>🌿 ${h.name}</h3>
+                        <p>${h.details.description}</p>
+                        <ul class="benefits">
+                            ${h.details.benefits.map(b => '<li>' + b + '</li>').join('')}
+                        </ul>
+                        <div class="uses">💊 How to use: ${h.details.uses}</div>
+                        <div style="margin-top:10px">
+                            ${h.details.treats.map(t => '<span class="treat-tag">' + t + '</span>').join('')}
+                        </div>
+                    </div>
+                `).join('');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -78,5 +78,20 @@ def calculate_score():
 
     return jsonify({"score": score, "message": message})
 
+@app.route("/herb_search", methods=["GET", "POST"])
+def herb_search():
+    if request.method == "POST":
+        data = request.get_json()
+        search_term = data["search_term"].lower()
+        results = []
+        for name, details in herbs_database.items():
+            if search_term in name.lower() or search_term in details["uses"].lower() or any(search_term in t.lower() for t in details["treats"]):
+                results.append({"name": name, "details": details})
+        if results:
+            return jsonify({"found": True, "results": results})
+        else:
+            return jsonify({"found": False, "message": "No herb found. Try Tulsi, Neem or Ginger."})
+    return render_template("herb_search.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
