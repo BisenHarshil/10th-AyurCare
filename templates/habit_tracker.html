@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Habit Tracker — AyurCare</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        .header { background: #2d6a4f; color: white; padding: 20px 24px; }
+        .header a { color: white; text-decoration: none; font-size: 14px; }
+        .header h2 { margin-top: 6px; }
+        .container { max-width: 600px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        label { font-weight: bold; font-size: 14px; display: block; margin-bottom: 6px; margin-top: 16px; color: #2d6a4f; }
+        input[type=number], select {
+            width: 100%; padding: 10px; border: 1px solid #ccc;
+            border-radius: 6px; font-size: 14px; margin-bottom: 4px;
+        }
+        .submit-btn { background: #2d6a4f; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; margin-top: 20px; }
+        .submit-btn:hover { background: #1b4332; }
+        .result { display: none; background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); text-align: center; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; background: #2d6a4f; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; flex-direction: column; }
+        .score-circle .num { font-size: 36px; font-weight: bold; }
+        .score-circle .label { font-size: 12px; opacity: 0.85; }
+        .message { font-size: 15px; color: #555; line-height: 1.6; margin-top: 10px; }
+        .score-bar { height: 10px; border-radius: 5px; background: #d8f3dc; margin: 16px 0; }
+        .score-fill { height: 10px; border-radius: 5px; background: #2d6a4f; transition: width 1s; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← Back to Home</a>
+        <h2>🧘 Daily Habit Tracker</h2>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h3 style="color:#2d6a4f">How was your day?</h3>
+            <p style="color:#666;font-size:14px;margin-top:6px">Track your daily habits and get your Ayurvedic health score</p>
+
+            <label>💧 Glasses of water today</label>
+            <input type="number" id="water" min="0" max="20" placeholder="e.g. 8">
+
+            <label>😴 Hours of sleep last night</label>
+            <input type="number" id="sleep" min="0" max="24" placeholder="e.g. 7">
+
+            <label>🥗 How was your diet today?</label>
+            <select id="diet">
+                <option value="balanced">Balanced — fruits, vegetables, whole grains</option>
+                <option value="average">Average — some healthy, some junk</option>
+                <option value="poor">Poor — mostly junk or skipped meals</option>
+            </select>
+
+            <button class="submit-btn" onclick="calculateScore()">Calculate My Health Score</button>
+        </div>
+
+        <div class="result" id="result">
+            <div class="score-circle">
+                <span class="num" id="scoreNum">0</span>
+                <span class="label">out of 100</span>
+            </div>
+            <div class="score-bar">
+                <div class="score-fill" id="scoreBar" style="width:0%"></div>
+            </div>
+            <p class="message" id="scoreMessage"></p>
+            <br>
+            <a href="/" style="color:#2d6a4f;font-size:14px">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        function calculateScore() {
+            var water = document.getElementById('water').value;
+            var sleep = document.getElementById('sleep').value;
+            var diet = document.getElementById('diet').value;
+
+            if (!water || !sleep) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            fetch('/calculate_score', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({water: water, sleep: sleep, diet: diet})
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('scoreNum').textContent = data.score;
+                document.getElementById('scoreBar').style.width = data.score + '%';
+                document.getElementById('scoreMessage').textContent = data.message;
+                document.getElementById('result').scrollIntoView({behavior:'smooth'});
+            });
+        }
+    </script>
+</body>
+</html>

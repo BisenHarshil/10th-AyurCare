@@ -1,46 +1,41 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Ayurveda Index</title>
-
+    <title>AyurCare</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            color: #4CAF50;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        th,
-        td {
-            border: 1px solid black;
-            padding: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        .header { background: #2d6a4f; color: white; padding: 24px; text-align: center; }
+        .header h1 { font-size: 32px; }
+        .header p { margin-top: 6px; opacity: 0.85; }
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        .tip-box { background: white; border-left: 5px solid #52b788; padding: 20px; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .tip-box h3 { color: #2d6a4f; margin-bottom: 8px; }
+        .tip-box p { font-size: 15px; line-height: 1.6; }
+        .tip-box small { color: #888; }
+        .buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn { flex: 1; padding: 18px; border-radius: 10px; text-align: center; text-decoration: none; font-size: 16px; font-weight: bold; min-width: 200px; }
+        .btn-green { background: #2d6a4f; color: white; }
+        .btn-light { background: white; color: #2d6a4f; border: 2px solid #2d6a4f; }
+        .btn:hover { opacity: 0.9; }
     </style>
-
 </head>
-
 <body>
-
-    <h1>Ayurveda Index</h1>
-    <p>Welcome to the Ayurveda Index!</p>
-    <h3>💡 Daily Ayurvedic Tip:</h3>
-    <p>{{ tips.tip }}</p>
-    <small>Category: {{ tips.category }}</small>
-
-    <br><br>
-    <a href="/check_symptoms">🌿 Check Symptoms</a>
-    <br><br>
-    <a href="/browse_herbs">🌱 Browse Herbs</a>
-
+    <div class="header">
+        <h1>🌿 AyurCare</h1>
+        <p>Ancient wisdom for modern health</p>
+    </div>
+    <div class="container">
+        <div class="tip-box">
+            <h3>💡 Today's Ayurvedic Tip</h3>
+            <p>{{ tips.tip }}</p>
+            <small>Category: {{ tips.category }}</small>
+        </div>
+        <div class="buttons">
+            <a href="/check_symptoms" class="btn btn-green">🌡️ Check Symptoms</a>
+            <a href="/browse_herbs" class="btn btn-light">🌱 Browse Herbs</a>
+            <a href="/habit_tracker" class="btn btn-light">🧘 Habit Tracker</a>
+        </div>
+    </div>
 </body>
-
 </html>
