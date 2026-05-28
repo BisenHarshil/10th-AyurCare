@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Herbs — AyurCare</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        .header { background: #2d6a4f; color: white; padding: 20px 24px; }
+        .header a { color: white; text-decoration: none; font-size: 14px; }
+        .header h2 { margin-top: 6px; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .herb-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .herb-card h3 { color: #2d6a4f; font-size: 18px; margin-bottom: 8px; }
+        .herb-card p { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 10px; }
+        .benefits { padding-left: 18px; margin-bottom: 10px; }
+        .benefits li { font-size: 13px; margin-bottom: 4px; }
+        .uses { font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px; }
+        .treat-tag { display: inline-block; background: #d8f3dc; color: #2d6a4f; padding: 2px 10px; border-radius: 10px; font-size: 11px; margin: 2px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← Back to Home</a>
+        <h2>🌱 Ayurvedic Herbs</h2>
+    </div>
+    <div class="container">
+        <div class="grid">
+            {% for name, herb in herbs.items() %}
+            <div class="herb-card">
+                <h3>🌿 {{ name }}</h3>
+                <p>{{ herb.description }}</p>
+                <ul class="benefits">
+                    {% for b in herb.benefits %}
+                    <li>{{ b }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="uses">💊 How to use: {{ herb.uses }}</div>
+                <div style="margin-top:8px">
+                    {% for t in herb.treats %}
+                    <span class="treat-tag">{{ t }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

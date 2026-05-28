@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Symptoms — AyurCare</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        .header { background: #2d6a4f; color: white; padding: 20px 24px; }
+        .header a { color: white; text-decoration: none; font-size: 14px; }
+        .header h2 { margin-top: 6px; }
+        .container { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .symptom-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+        .symptom-btn { padding: 10px 18px; border: 2px solid #2d6a4f; border-radius: 20px; background: white; color: #2d6a4f; cursor: pointer; font-size: 14px; }
+        .symptom-btn.selected { background: #2d6a4f; color: white; }
+        .submit-btn { background: #2d6a4f; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .submit-btn:hover { background: #1b4332; }
+        .results { display: none; }
+        .result-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 16px; }
+        .result-card h3 { color: #2d6a4f; margin-bottom: 12px; }
+        .result-card ul { padding-left: 20px; }
+        .result-card li { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+        .herb-tag { display: inline-block; background: #d8f3dc; color: #2d6a4f; padding: 4px 12px; border-radius: 12px; font-size: 13px; margin: 4px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← Back to Home</a>
+        <h2>🌡️ Symptom Checker</h2>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h3>Select your symptoms</h3>
+            <p style="color:#666;font-size:14px;margin-top:6px">Choose one or more symptoms below</p>
+            <div class="symptom-grid" id="symptomGrid">
+                <button class="symptom-btn" onclick="toggle(this)" data-val="headache">🤕 Headache</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="cold">🤧 Cold</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="fever">🌡️ Fever</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="acidity">🔥 Acidity</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="stress">😓 Stress</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="joint pain">🦴 Joint Pain</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="skin problems">✨ Skin Problems</button>
+                <button class="symptom-btn" onclick="toggle(this)" data-val="digestion">🫃 Digestion</button>
+            </div>
+            <button class="submit-btn" onclick="getRemedies()">Get Ayurvedic Remedies</button>
+        </div>
+        <div class="results" id="results">
+            <div class="result-card">
+                <h3>🌿 Recommended Remedies</h3>
+                <ul id="remediesList"></ul>
+            </div>
+            <div class="result-card">
+                <h3>🌱 Herbs to Use</h3>
+                <div id="herbsList"></div>
+            </div>
+            <div class="result-card">
+                <h3>🧘 Lifestyle Advice</h3>
+                <ul id="lifestyleList"></ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        var selected = [];
+        function toggle(btn) {
+            var val = btn.getAttribute('data-val');
+            if (btn.classList.contains('selected')) {
+                btn.classList.remove('selected');
+                selected = selected.filter(s => s !== val);
+            } else {
+                btn.classList.add('selected');
+                selected.push(val);
+            }
+        }
+        function getRemedies() {
+            if (selected.length === 0) { alert('Please select at least one symptom.'); return; }
+            fetch('/check_remedies', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({symptoms: selected})
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('results').style.display = 'block';
+                var rl = document.getElementById('remediesList');
+                rl.innerHTML = data.remedies.map(r => '<li>' + r + '</li>').join('');
+                var hl = document.getElementById('herbsList');
+                hl.innerHTML = [...new Set(data.herbs)].map(h => '<span class="herb-tag">' + h + '</span>').join('');
+                var ll = document.getElementById('lifestyleList');
+                ll.innerHTML = data.lifestyle.map(l => '<li>' + l + '</li>').join('');
+                document.getElementById('results').scrollIntoView({behavior:'smooth'});
+            });
+        }
+    </script>
+</body>
+</html>

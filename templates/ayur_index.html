@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ayurveda Index</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Ayurveda Index</h1>
+    <p>Welcome to the Ayurveda Index!</p>
+    <h3>💡 Daily Ayurvedic Tip:</h3>
+    <p>{{ tips.tip }}</p>
+    <small>Category: {{ tips.category }}</small>
+
+    <br><br>
+    <a href="/check_symptoms">🌿 Check Symptoms</a>
+    <br><br>
+    <a href="/browse_herbs">🌱 Browse Herbs</a>
+
+</body>
+
+</html>
