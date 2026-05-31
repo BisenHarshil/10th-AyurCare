@@ -68,14 +68,17 @@ python app.py
 ```
 
 **Step 4 — Open in browser**
+```bash
 http://127.0.0.1:5000
+```
+
 ---
 
 ## Project Structure
 AyurCare/
-├── app.py          — Flask routes and application logic
-├── data.py         — Ayurvedic knowledge base (herbs, remedies, tips)
-├── templates/      — HTML pages
+├── app.py — Flask routes and application logic
+├── data.py — Ayurvedic knowledge base (herbs, remedies, tips)
+├── templates/  — HTML pages
 │   ├── ayur_index.html
 │   ├── check_symptoms.html
 │   ├── herbs.html
