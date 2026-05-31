@@ -72,6 +72,10 @@
             <br>
             <a href="/" style="color:#2d6a4f;font-size:14px">← Back to Home</a>
         </div>
+        <div id="basicsList" style="text-align:left;margin-top:16px;display:none">
+            <h4 style="color:#2d6a4f;margin-bottom:8px">🌿 Ayurvedic Basics to Follow Today</h4>
+            <ul id="basicsUl" style="padding-left:20px;font-size:14px;line-height:1.8;color:#555"></ul>
+        </div>
     </div>
 
     <script>
@@ -96,6 +100,15 @@
                 document.getElementById('scoreNum').textContent = data.score;
                 document.getElementById('scoreBar').style.width = data.score + '%';
                 document.getElementById('scoreMessage').textContent = data.message;
+    
+                if (data.basics && data.basics.length > 0) {
+                    document.getElementById('basicsList').style.display = 'block';
+                    document.getElementById('basicsUl').innerHTML = 
+                    data.basics.map(b => '<li>' + b + '</li>').join('');
+                } else {
+                    document.getElementById('basicsList').style.display = 'none';
+                }
+    
                 document.getElementById('result').scrollIntoView({behavior:'smooth'});
             });
         }

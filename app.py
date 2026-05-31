@@ -67,16 +67,28 @@ def calculate_score():
     else:
         score+=5
 
+    if water == 0 or sleep == 0:
+        return jsonify({"score": 0, "message": "Please enter valid water and sleep values."})
+    
+    if water > 20:
+        return jsonify({"score": 0, "message": "Please enter a realistic water intake value."})
+    if sleep > 24:
+        return jsonify({"score": 0, "message": "Please enter a realistic sleep value."})
+    
     if score >= 80:
         message = "Excellent! Your body is in balance today."
+        basics = []
     elif score >= 60:
         message = "Good effort. Small improvements will make a big difference."
+        basics = ["Drink warm water every morning", "Sleep before 10pm"]
     elif score >= 40:
         message = "Your body needs more care today. Focus on water and sleep."
+        basics = ["Drink at least 8 glasses of water", "Sleep 7-8 hours", "Eat one meal with vegetables today"]
     else:
         message = "Your health needs urgent attention. Follow Ayurvedic basics."
+        basics = ["Start with warm water and lemon every morning", "Sleep by 10pm — this is critical", "Eat simple home cooked food today", "Take 10 deep breaths before each meal", "Avoid cold drinks completely"]
 
-    return jsonify({"score": score, "message": message})
+    return jsonify({"score": score, "message": message, "basics": basics})
 
 @app.route("/herb_search", methods=["GET", "POST"])
 def herb_search():
