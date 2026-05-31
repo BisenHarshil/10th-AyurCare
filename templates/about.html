@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About — AyurCare</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        .header { background: #2d6a4f; color: white; padding: 20px 24px; }
+        .header a { color: white; text-decoration: none; font-size: 14px; }
+        .header h2 { margin-top: 6px; }
+        .container { max-width: 750px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 10px; padding: 28px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .card h2 { color: #2d6a4f; margin-bottom: 12px; font-size: 20px; }
+        .card p { font-size: 14px; line-height: 1.8; color: #555; margin-bottom: 10px; }
+        .highlight { background: #d8f3dc; border-left: 4px solid #2d6a4f; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 14px; color: #1b4332; line-height: 1.7; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+        .feature { background: #f0f7f0; border-radius: 8px; padding: 16px; text-align: center; }
+        .feature .icon { font-size: 28px; margin-bottom: 8px; }
+        .feature h4 { color: #2d6a4f; font-size: 14px; margin-bottom: 4px; }
+        .feature p { font-size: 12px; color: #666; }
+        .creator { display: flex; align-items: center; gap: 20px; }
+        .avatar { width: 70px; height: 70px; border-radius: 50%; background: #2d6a4f; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+        .creator-info h3 { color: #2d6a4f; margin-bottom: 4px; }
+        .creator-info p { font-size: 13px; color: #666; line-height: 1.6; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .tech-tag { background: #2d6a4f; color: white; padding: 4px 14px; border-radius: 20px; font-size: 12px; }
+        .back-btn { display: inline-block; background: #2d6a4f; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-size: 14px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <nav style="background:#1b4332;padding:12px 24px;display:flex;gap:20px;align-items:center">
+    <a href="/" style="color:white;text-decoration:none;font-weight:bold;font-size:16px">🌿 AyurCare</a>
+    <a href="/check_symptoms" style="color:#d8f3dc;text-decoration:none;font-size:14px">Symptom Checker</a>
+    <a href="/browse_herbs" style="color:#d8f3dc;text-decoration:none;font-size:14px">Herbs</a>
+    <a href="/herb_search" style="color:#d8f3dc;text-decoration:none;font-size:14px">Search</a>
+    <a href="/habit_tracker" style="color:#d8f3dc;text-decoration:none;font-size:14px">Habit Tracker</a>
+    <a href="/about" style="color:#d8f3dc;text-decoration:none;font-size:14px">About</a>
+    </nav>
+    <div class="header">
+        <a href="/">← Back to Home</a>
+        <h2>🌿 About AyurCare</h2>
+    </div>
+    <div class="container">
+
+        <div class="card">
+            <h2>Why AyurCare?</h2>
+            <p>In a world of expensive medicines and endless doctor visits, India already has a 5,000-year-old answer — Ayurveda. It is not just a medical system. It is a way of life, deeply rooted in Indian culture, passed down through generations.</p>
+            <p>Yet most young people today don't know which herb helps with stress, or what to do when a family member has fever and doesn't want to rush to a clinic. That knowledge is getting lost.</p>
+            <div class="highlight">
+                💡 AyurCare was built to bring that ancient wisdom into a modern, easy-to-use digital form — so anyone can access it from their phone or laptop, anytime.
+            </div>
+            <p>Ayurveda has cures for conditions that modern medicine sometimes struggles with — chronic stress, digestive issues, skin problems, joint pain. This app makes that knowledge accessible, searchable and practical.</p>
+        </div>
+
+        <div class="card">
+            <h2>What AyurCare Does</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="icon">🌡️</div>
+                    <h4>Symptom Checker</h4>
+                    <p>Select symptoms and get Ayurvedic remedies, herbs and lifestyle advice instantly</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">🌱</div>
+                    <h4>Herb Database</h4>
+                    <p>Browse and search 8 powerful Ayurvedic herbs with benefits and usage guides</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">🧘</div>
+                    <h4>Habit Tracker</h4>
+                    <p>Log daily water, sleep and diet to get your personalised Ayurvedic health score</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">💡</div>
+                    <h4>Daily Tips</h4>
+                    <p>A new Ayurvedic tip every visit — small habits that make a big difference</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Who Is This For?</h2>
+            <p>AyurCare is for anyone who wants to take charge of their health the natural way:</p>
+            <div class="highlight">
+                🏠 Families who want home remedies before rushing to a doctor<br><br>
+                🌿 People curious about Ayurvedic herbs and their real benefits<br><br>
+                💪 Anyone who wants to build healthier daily habits<br><br>
+                📚 Students and researchers exploring traditional Indian medicine
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Built By</h2>
+            <div class="creator">
+                <div class="avatar">Hb</div>
+                <div class="creator-info">
+                    <h3>Harshil Bisen</h3>
+                    <p>Class 10 student and developer. Built AyurCare in 3 weeks using Python, Flask and OOPS — from scratch, no templates, no shortcuts. Passionate about using technology to preserve and share India's traditional wisdom.</p>
+                </div>
+            </div>
+            <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">OOPS</span>
+                <span class="tech-tag">HTML & CSS</span>
+                <span class="tech-tag">JSON</span>
+                <span class="tech-tag">Git & GitHub</span>
+            </div>
+        </div>
+
+        <a href="/" class="back-btn">← Back to Home</a>
+        <br><br>
+    </div>
+    <footer style="text-align:center;padding:24px;color:#888;font-size:12px;margin-top:40px">
+    🌿 AyurCare — Ancient wisdom for modern health | Built by Harshil Bisen
+    </footer>
+</body>
+</html>
