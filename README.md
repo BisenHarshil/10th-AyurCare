@@ -1,4 +1,7 @@
 # AyurCare 🌿
+
+###"AyurCare isn't just running on my laptop — it's live on the internet. Anyone can open it right now."
+
 ### Ancient wisdom for modern health
 
 AyurCare is a web application built for anyone who wants to explore Ayurveda — 
