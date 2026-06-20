@@ -106,3 +106,10 @@ daily_tips = [
     {"tip": "Practice gratitude before sleeping — it calms Vata dosha.", "category": "Mental Health"},
     {"tip": "Add a pinch of turmeric to your morning milk for daily immunity.", "category": "Immunity"},
 ]
+
+weather_tips = {
+    "cold": {"tip": "It's cold today — drink warm ginger tea and avoid cold foods to balance Vata dosha.", "category": "Seasonal"},
+    "hot": {"tip": "It's hot today — drink coconut water and eat cooling foods like cucumber to balance Pitta dosha.", "category": "Seasonal"},
+    "rainy": {"tip": "Rainy weather increases Kapha — favor light, warm, freshly cooked meals and avoid heavy or oily food.", "category": "Seasonal"},
+    "normal": {"tip": "Pleasant weather today — a good day for outdoor walks and fresh seasonal fruits.", "category": "Seasonal"}
+}

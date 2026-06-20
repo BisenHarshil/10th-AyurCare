@@ -39,6 +39,13 @@
             <p>{{ tips.tip }}</p>
             <small>Category: {{ tips.category }}</small>
         </div>
+        {% if weather_tip %}
+        <div class="tip-box" style="border-left-color: #2196F3; margin-top: 16px;">
+            <h3>🌤️ Today's Weather Tip — {{ temp }}°C, {{ weather_desc }}</h3>
+            <p>{{ weather_tip.tip }}</p>
+            <small>Category: {{ weather_tip.category }}</small>
+        </div>
+        {% endif %}
         <div class="buttons">
             <a href="/check_symptoms" class="btn btn-green">🌡️ Check Symptoms</a>
             <a href="/browse_herbs" class="btn btn-light">🌱 Browse Herbs</a>

@@ -1,16 +1,21 @@
 from flask import Flask, render_template, request, jsonify
 import random
+import requests
 
-from data import symptoms_remedies, herbs_database, daily_tips
+from data import symptoms_remedies, herbs_database, daily_tips, weather_tips
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    tips = random.choice(daily_tips)
-
+    tip = random.choice(daily_tips)
+    weather_tip, temp, weather_desc = get_weather_tip("Delhi")
+    
     return render_template("ayur_index.html",
-                            tips=tips)
+                            tips=tip,
+                            weather_tip=weather_tip,
+                            temp=temp,
+                            weather_desc=weather_desc)
 
 @app.route("/check_remedies", methods=["POST"])
 def check_remedies():
@@ -104,6 +109,34 @@ def herb_search():
         else:
             return jsonify({"found": False, "message": "No herb found. Try Tulsi, Neem or Ginger."})
     return render_template("herb_search.html")
+
+def get_weather_tip(city="Delhi"):
+    try:
+        response = requests.get(f"https://wttr.in/{city}?format=j1", timeout=5)
+        data = response.json()
+        print("API call succeeded")
+        
+        temp = int(data["current_condition"][0]["temp_C"])
+        print(f"Temp: {temp}")
+        
+        desc = data["current_condition"][0]["weatherDesc"][0]["value"].lower()
+        print(f"Desc: {desc}")
+        
+        if temp < 15:
+            condition = "cold"
+        elif temp > 32:
+            condition = "hot"
+        elif "rain" in desc or "drizzle" in desc:
+            condition = "rainy"
+        else:
+            condition = "normal"
+        
+        print(f"Condition: {condition}")
+        return weather_tips[condition], temp, desc
+        
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return random.choice(daily_tips), None, None
 
 @app.route("/about")
 def about():
