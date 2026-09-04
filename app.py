@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, json, render_template, request, jsonify
 import random
 import requests
 
@@ -38,6 +38,41 @@ def check_symptoms():
 @app.route("/browse_herbs")    
 def browse_herbs():
     return render_template("herbs.html", herbs=herbs_database)
+
+@app.route("/feedback", methods=["GET", "POST"])
+def feedback():
+    if request.method == "POST":
+        data = request.get_json()
+        name = data["name"]
+        ftype = data["type"]
+        message = data["message"]
+        
+        import datetime
+        entry = {
+            "name": name,
+            "type": ftype,
+            "message": message,
+            "date": datetime.datetime.now().strftime("%D-%m-%Y %H:%M")
+        }
+        
+        # load existing feedback
+        try:
+            with open("feedback.json", "r") as f:
+                content = f.read().strip()
+                all_feedback = json.load(f) if content else []
+        except FileNotFoundError:
+            all_feedback = []
+        except json.JSONDecodeError:
+            all_feedback = []
+        
+        # add new entry and save
+        all_feedback.append(entry)
+        with open("feedback.json", "w") as f:
+            json.dump(all_feedback, f, indent=4)
+        
+        return jsonify({"success": True, "message": "Feedback saved!"})
+    
+    return render_template("feedback.html")
 
 @app.route("/habit_tracker", methods=["GET"])
 def habit_tracker():

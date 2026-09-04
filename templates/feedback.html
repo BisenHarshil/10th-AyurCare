@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback — AyurCare</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f7f0; color: #333; }
+        nav { background: #1b4332; padding: 12px 24px; display: flex; gap: 20px; align-items: center; }
+        nav a { color: white; text-decoration: none; font-size: 14px; }
+        nav a:first-child { font-weight: bold; font-size: 16px; }
+        .container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 10px; padding: 28px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        h2 { color: #2d6a4f; margin-bottom: 6px; }
+        .subtitle { color: #888; font-size: 13px; margin-bottom: 20px; }
+        label { font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px; margin-top: 14px; color: #2d6a4f; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; font-family: Arial; }
+        textarea { height: 100px; resize: vertical; }
+        .btn { background: #2d6a4f; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; margin-top: 20px; }
+        .btn:hover { background: #1b4332; }
+        .success { display: none; background: #d8f3dc; border-radius: 8px; padding: 16px; text-align: center; margin-top: 16px; color: #2d6a4f; font-size: 14px; }
+        footer { text-align: center; padding: 24px; color: #888; font-size: 12px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">🌿 AyurCare</a>
+        <a href="/check_symptoms">Symptom Checker</a>
+        <a href="/browse_herbs">Herbs</a>
+        <a href="/herb_search">Search</a>
+        <a href="/habit_tracker">Habit Tracker</a>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>💬 Share Your Feedback</h2>
+            <p class="subtitle">Suggest a new herb, remedy or report an issue — help make AyurCare better</p>
+
+            <label>Your Name</label>
+            <input type="text" id="name" placeholder="e.g. Harshil">
+
+            <label>Feedback Type</label>
+            <select id="ftype">
+                <option value="new herb">🌿 Suggest a new herb</option>
+                <option value="new remedy">💊 Suggest a new remedy</option>
+                <option value="bug report">🐛 Report a bug</option>
+                <option value="general">💬 General feedback</option>
+            </select>
+
+            <label>Your Message</label>
+            <textarea id="message" placeholder="Tell us your suggestion or feedback..."></textarea>
+
+            <button class="btn" onclick="submitFeedback()">Submit Feedback</button>
+
+            <div class="success" id="success">
+                ✅ Thank you! Your feedback has been recorded. We'll review it soon.
+            </div>
+        </div>
+    </div>
+
+    <footer>🌿 AyurCare — Ancient wisdom for modern health | Built by Harshil Bisen</footer>
+
+    <script>
+        function submitFeedback() {
+            var name = document.getElementById('name').value.trim();
+            var ftype = document.getElementById('ftype').value;
+            var message = document.getElementById('message').value.trim();
+
+            if (!name || !message) {
+                alert('Please fill in your name and message.');
+                return;
+            }
+
+            fetch('/feedback', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name: name, type: ftype, message: message})
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('success').style.display = 'block';
+                    document.getElementById('name').value = '';
+                    document.getElementById('message').value = '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
